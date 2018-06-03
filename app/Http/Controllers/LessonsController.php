@@ -30,6 +30,7 @@ class LessonsController extends Controller
         //没有错误信息
 //        return Lesson::all();//bad
         $lessons=Lesson::all();
+
         return \Response::json([
             'status'=>'success',
             'status_code'=>200,
@@ -43,7 +44,15 @@ class LessonsController extends Controller
      */
     public function show($id)
     {
-        $lessons = Lesson::findOrFail($id);
+//        $lessons = Lesson::findOrFail($id);
+        $lessons = Lesson::find($id);//404
+        if(!$lessons){
+            return \Response::json([
+                'status'=>'failed',
+                'status_code'=>404,
+                'message'=>'lesson not found'
+            ]);
+        }
         return \Response::json([
             'status'=>'success',
             'status_code'=>200,
